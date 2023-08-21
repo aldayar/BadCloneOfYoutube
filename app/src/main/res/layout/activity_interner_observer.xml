@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/error_container"
     tools:context=".ui.internetobserveractivity.InternetObserverActivity">
 
     <ImageView
@@ -16,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_try_Again"
         android:backgroundTint="@color/red"
         app:cornerRadius="8dp"
         android:padding="8dp"

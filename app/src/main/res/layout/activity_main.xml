@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/refresh"
+    android:id="@+id/parentLayout"
     tools:context=".ui.activty_main.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,4 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_rc" />
+    <include
+        layout="@layout/activity_interner_observer"
+        android:id="@+id/noConnectionLayout"
+    android:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>

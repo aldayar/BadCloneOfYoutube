@@ -1,14 +1,22 @@
 package com.example.badcloneofyoutube.ui.internetobserveractivity
 
-import android.annotation.TargetApi
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.*
-import android.os.Build
-import androidx.lifecycle.LiveData
+import android.net.ConnectivityManager
 
-class InternetObserverActivity(private val context: Context) : LiveData<Boolean>() {
-// Coming soon
+class InternetObserverActivity(private val context: Context, private val callback: InternetCallback) {
+
+    interface InternetCallback {
+        fun onInternetAvailable()
+        fun onInternetUnavailable()
+    }
+
+    fun checkInternet() {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        if (networkInfo != null && networkInfo.isConnected) {
+            callback.onInternetAvailable()
+        } else {
+            callback.onInternetUnavailable()
+        }
+    }
 }
