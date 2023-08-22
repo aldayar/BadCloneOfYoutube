@@ -1,6 +1,6 @@
 package com.example.badcloneofyoutube.ui.activty_main
 
-import android.opengl.Visibility
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,16 +12,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.badcloneofyoutube.R
 import com.example.badcloneofyoutube.core.UIState
 import com.example.badcloneofyoutube.databinding.ActivityMainBinding
+import com.example.badcloneofyoutube.ui.detailplaylistactitvity.PlaylistDetailActivity
 import com.example.badcloneofyoutube.ui.internetobserveractivity.InternetObserverActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), InternetObserverActivity.InternetCallback {
+class MainActivity : AppCompatActivity(), InternetObserverActivity.InternetCallback,
+    PlaylistAdapter.OnClickListener {
 
     private val internetObserver by lazy { InternetObserverActivity(this, this) }
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: PlaylistAdapter
-    private val viewModel by lazy { ViewModelProvider(this)[MainActivityViewModel::class.java] }
+    private  val adapter by lazy { PlaylistAdapter(this) }
+    private val viewModel by lazy { ViewModelProvider(this)[PLaylistViewModel::class.java] }
     private var isConnected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity(), InternetObserverActivity.InternetCallb
 
         internetObserver.checkInternet()
 
-        adapter = PlaylistAdapter()
         binding.recyclerView.adapter = adapter
 
         fetchData()
@@ -58,18 +59,27 @@ class MainActivity : AppCompatActivity(), InternetObserverActivity.InternetCallb
     private fun fetchData() {
         viewModel.getPlaylists()
         getPlaylist()
-    }   override fun onInternetAvailable() {
+    }
+
+    override fun onInternetAvailable() {
         if (!isConnected) {
             isConnected = true
             binding.noConnectionLayout.root.visibility = View.GONE
             fetchData()
         }
     }
-        override fun onInternetUnavailable() {
-            binding.noConnectionLayout.root.visibility = View.VISIBLE
+
+    override fun onInternetUnavailable() {
+        binding.noConnectionLayout.root.visibility = View.VISIBLE
         val recheckButton = findViewById<Button>(R.id.btn_try_Again)
         recheckButton.setOnClickListener {
             internetObserver.checkInternet()
         }
+    }
+
+    override fun onClick(model: String?) {
+        val intent = Intent(this, PlaylistDetailActivity::class.java)
+        intent.putExtra("playlistId", model)
+        startActivity(intent)
     }
 }

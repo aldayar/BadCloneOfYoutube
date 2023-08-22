@@ -16,13 +16,13 @@
         android:theme="@style/Theme.BadCloneOfYoutube"
         tools:targetApi="31">
         <activity
-            android:name=".PLaylistDeteilActivity"
+            android:name=".ui.detailplaylistactitvity.PlaylistDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.internetobserveractivity.InternetObserverActivity"
             android:exported="false"
             android:label="@string/title_activity_interner_observer"
-            android:theme="@style/Theme.BadCloneOfYoutube.NoActionBar"></activity>
+            android:theme="@style/Theme.BadCloneOfYoutube.NoActionBar" />
         <activity
             android:name=".ui.activty_main.MainActivity"
             android:exported="true">

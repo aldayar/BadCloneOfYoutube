@@ -20,4 +20,5 @@
     <string name="tv_toolbar_title">Toolbar Title</string>
     <string name="tv_button">Back</string>
     <string name="tv_video_count">Video count</string>
+    <string name="tv_video_timeCode">00:00</string>
 </resources>
