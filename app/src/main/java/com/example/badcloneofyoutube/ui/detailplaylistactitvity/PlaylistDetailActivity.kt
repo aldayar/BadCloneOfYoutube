@@ -1,21 +1,20 @@
 package com.example.badcloneofyoutube.ui.detailplaylistactitvity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.badcloneofyoutube.core.UIState
 import com.example.badcloneofyoutube.databinding.ActivityPlaylistDeteilBinding
-import com.example.badcloneofyoutube.ui.activty_main.PLaylistViewModel
-import com.example.badcloneofyoutube.ui.activty_main.PlaylistAdapter
+import com.example.badcloneofyoutube.ui.activty_main.PlaylistViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PlaylistDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlaylistDeteilBinding
-    private  val adapter: PlaylistDetailAdapter by lazy { PlaylistDetailAdapter() }
-    private val playlistViewModel by lazy { ViewModelProvider(this)[PLaylistViewModel::class.java] }
+    private val adapter: PlaylistDetailAdapter by lazy { PlaylistDetailAdapter() }
+    private val playlistViewModel by lazy { ViewModelProvider(this)[PlaylistViewModel::class.java] }
     private lateinit var playlistId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +31,15 @@ class PlaylistDetailActivity : AppCompatActivity() {
         fetchData()
 
     }
-    private fun getPlaylistDetail() {
+
+    private fun fetchData() {
+        playlistViewModel.getDetailPlaylist(playlistId)
         playlistViewModel.playlistDetail.observe(this) {
             when (it) {
                 is UIState.Loading -> {
-                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Loading..", Toast.LENGTH_SHORT).show()
                 }
                 is UIState.Success -> {
-
                     val playlistItems = it.data?.items
                     adapter.submitList(playlistItems)
                     binding.tvVideoCount.text = it.data?.items?.size.toString()
@@ -49,13 +49,9 @@ class PlaylistDetailActivity : AppCompatActivity() {
                     }
                 }
                 is UIState.Error -> {
-                    Log.e( "ololo",it.msg.toString() )
+                    Log.e("oloolo", it.msg.toString())
                 }
             }
         }
-    }
-    private fun fetchData() {
-        playlistViewModel.getDatailPlaylist(playlistId)
-        getPlaylistDetail()
     }
 }

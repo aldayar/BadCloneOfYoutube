@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), InternetObserverActivity.InternetCallb
     private val internetObserver by lazy { InternetObserverActivity(this, this) }
     private lateinit var binding: ActivityMainBinding
     private  val adapter by lazy { PlaylistAdapter(this) }
-    private val viewModel by lazy { ViewModelProvider(this)[PLaylistViewModel::class.java] }
+    private val viewModel by lazy { ViewModelProvider(this)[PlaylistViewModel::class.java] }
     private var isConnected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,29 +38,24 @@ class MainActivity : AppCompatActivity(), InternetObserverActivity.InternetCallb
 
         fetchData()
     }
-
-    private fun getPlaylist() {
+    private fun fetchData() {
+        viewModel.getPlaylists()
         viewModel.playlistLiveData.observe(this) {
             when (it) {
                 is UIState.Loading -> {
-                    Toast.makeText(this, "Loading, please wait", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show()
                 }
                 is UIState.Success -> {
                     adapter.submitList(it.data?.items)
                 }
                 is UIState.Error -> {
-                    Toast.makeText(this, "Connection error", Toast.LENGTH_SHORT).show()
-                    Log.e("ololo", "API call failed: ${it.msg.toString()}")
+                    Toast.makeText(this, "Error occurred, try again", Toast.LENGTH_SHORT).show()
+                    Log.e("ololo", it.msg.toString())
+
                 }
             }
         }
     }
-
-    private fun fetchData() {
-        viewModel.getPlaylists()
-        getPlaylist()
-    }
-
     override fun onInternetAvailable() {
         if (!isConnected) {
             isConnected = true
