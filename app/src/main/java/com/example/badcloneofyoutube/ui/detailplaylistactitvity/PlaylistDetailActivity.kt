@@ -39,8 +39,14 @@ class PlaylistDetailActivity : AppCompatActivity() {
                     Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                 }
                 is UIState.Success -> {
+
                     val playlistItems = it.data?.items
                     adapter.submitList(playlistItems)
+                    binding.tvVideoCount.text = it.data?.items?.size.toString()
+                    if (!playlistItems.isNullOrEmpty()) {
+                        binding.tvTitle.text= playlistItems[0]?.snippet?.title
+                        binding.tvDesc.text= playlistItems[0]?.snippet?.description
+                    }
                 }
                 is UIState.Error -> {
                     Log.e( "ololo",it.msg.toString() )

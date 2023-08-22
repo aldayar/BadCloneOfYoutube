@@ -21,7 +21,7 @@ interface ApiService {
         @Query("key") key: String=BuildConfig.API_KEY,
         @Query("part") part: String=Constants.PART,
         @Query("playlistId") playlistId: String,
-        @Query("maxResults") maxResults: Int = 15
+        @Query("maxResults") maxResults: Int = 20
     ): Call<PlaylistItemResponse>
 }
 
