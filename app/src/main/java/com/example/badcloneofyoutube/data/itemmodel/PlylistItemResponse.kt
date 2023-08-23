@@ -1,6 +1,6 @@
 package com.example.badcloneofyoutube.data.itemmodel
 
-data class PlaylistItemResponse(
+data class PlylistItemResponse(
     val etag: String?,
     val items: List<Item?>?,
     val kind: String?,

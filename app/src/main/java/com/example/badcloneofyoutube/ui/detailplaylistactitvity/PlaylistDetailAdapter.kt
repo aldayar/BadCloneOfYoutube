@@ -8,7 +8,7 @@ import com.example.badcloneofyoutube.data.itemmodel.Item
 import com.example.badcloneofyoutube.databinding.ItemPlaylisItemBinding
 import com.example.badcloneofyoutube.utils.loadImage
 
-class PlaylistDetailAdapter :
+class PlaylistDetailAdapter(val listener: OnClickListener) :
     androidx.recyclerview.widget.ListAdapter<Item, PlaylistDetailAdapter.PlaylistDViewHolder>(
         PlaylistDDiffCallback()
     ) {
@@ -20,6 +20,7 @@ class PlaylistDetailAdapter :
 
             binding.imageView.loadImage(playlistDetail.snippet?.thumbnails?.maxres?.url!!)
 
+            itemView.setOnClickListener{listener.onClick(playlistDetail.snippet.resourceId?.videoId)}
 
         }
 
@@ -43,5 +44,8 @@ class PlaylistDetailAdapter :
     override fun onBindViewHolder(holder: PlaylistDViewHolder, position: Int) {
         val playlists = getItem(position)
         holder.bind(playlists)
+    }
+    interface OnClickListener {
+        fun onClick(videoId: String?)
     }
 }

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.BadCloneOfYoutube"
         tools:targetApi="31">
         <activity
+            android:name=".ui.videoplayeractivity.VideoPlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.detailplaylistactitvity.PlaylistDetailActivity"
             android:exported="false" />
         <activity

@@ -1,5 +1,6 @@
 package com.example.badcloneofyoutube.ui.detailplaylistactitvity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -8,13 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.badcloneofyoutube.core.UIState
 import com.example.badcloneofyoutube.databinding.ActivityPlaylistDeteilBinding
 import com.example.badcloneofyoutube.ui.activty_main.PlaylistViewModel
+import com.example.badcloneofyoutube.ui.videoplayeractivity.VideoPlayerActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlaylistDetailActivity : AppCompatActivity() {
+class PlaylistDetailActivity : AppCompatActivity(), PlaylistDetailAdapter.OnClickListener {
     private lateinit var binding: ActivityPlaylistDeteilBinding
-    private val adapter: PlaylistDetailAdapter by lazy { PlaylistDetailAdapter() }
-    private val playlistViewModel by lazy { ViewModelProvider(this)[PlaylistViewModel::class.java] }
+    private val adapter: PlaylistDetailAdapter by lazy { PlaylistDetailAdapter(this) }
+        private val playlistViewModel by lazy { ViewModelProvider(this)[PlaylistViewModel::class.java] }
     private lateinit var playlistId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,5 +55,11 @@ class PlaylistDetailActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onClick(videoId: String?) {
+        val intent = Intent(this, VideoPlayerActivity::class.java)
+        intent.putExtra("videoId", videoId)
+        startActivity(intent)
     }
 }

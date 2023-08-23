@@ -21,4 +21,6 @@
     <string name="tv_button">Back</string>
     <string name="tv_video_count">Video count</string>
     <string name="tv_video_timeCode">00:00</string>
+    <string name="tv_video_title">Video title</string>
+    <string name="tv_video_desc">Video description</string>
 </resources>

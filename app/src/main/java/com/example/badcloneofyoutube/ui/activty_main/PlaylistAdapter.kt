@@ -30,7 +30,7 @@ class PlaylistAdapter (val listener: OnClickListener,):
             binding.descriptionTextView.text = playlists.snippet?.description
             binding.titleTextView.text = playlists.snippet?.title
 
-            binding.imageView.loadImage(playlists.snippet?.thumbnails?.standard?.url!!)
+            binding.imageView.loadImage(playlists.snippet?.thumbnails?.maxres?.url!!)
 
             itemView.setOnClickListener{listener.onClick(playlists.id)}
         }

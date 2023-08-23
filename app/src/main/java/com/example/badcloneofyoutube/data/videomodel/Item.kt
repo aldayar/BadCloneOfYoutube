@@ -1,4 +1,4 @@
-package com.example.badcloneofyoutube.data.itemmodel
+package com.example.badcloneofyoutube.data.videomodel
 
 data class Item(
     val contentDetails: ContentDetails?,
